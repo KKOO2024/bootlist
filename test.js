@@ -1,39 +1,65 @@
 const today = new Date();
 let currentYear = today.getFullYear();
 let currentMonth = today.getMonth(); // 0부터 시작
+let selectedDate = null;
+
+let dataByDate = JSON.parse(localStorage.getItem('dataByDate')) || {
+  '2025-04-25': {
+    homeworkUrl: 'homework/2024-04-25.html',
+    insight: 'DOM은 진짜 중요함!',
+    review: '오늘 잘했다'
+  },
+  '2025-04-26': {
+    homeworkUrl: 'homework/2024-04-26.html',
+    insight: '이해가 한층 깊어짐',
+    review: '재밌었음'
+  },
+  '2025-04-27': {
+    homeworkUrl: 'homework/2024-04-26.html',
+    insight: '',
+    review: ''
+  }
+};
 
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
   const homeworkBtn = document.getElementById('homework-btn');
-  const insightBox = document.getElementById('insight');
-  const reviewBox = document.getElementById('review');
-  const contentBox = document.getElementById('contentbox');
+  const insightInput = document.getElementById('insight-input');
+  const reviewInput = document.getElementById('review-input');
   const closeBtn = document.querySelector('.close-btn');
   const modal = document.getElementById('homework-modal');
   const iframe = document.getElementById('homework-frame');
-  const insightInput = document.getElementById('insight-input');
-  const reviewInput = document.getElementById('review-input');
 
-  const dataByDate = {
-    '2025-04-25': {
-      homeworkUrl: 'homework/2024-04-25.html',
-      insight: 'DOM은 진짜 중요함!',
-      review: '오늘 잘했다'
-    },
-    '2025-04-26': {
-      homeworkUrl: 'homework/2024-04-26.html',
-      insight: '이해가 한층 깊어짐',
-      review: '재밌었음'
-    },
-    '2025-04-27': {
-      homeworkUrl: 'homework/2024-04-26.html',
-      insight: '이해가 한층 깊어짐',
-      review: '재밌었음'
-    }
-  };
-
-  let currentHomeworkUrl = null;
-
+      //텍스트에리어 저장 이벤트에 연결
+      insightInput.addEventListener('change', () => {
+        if (!selectedDate) return;
+      
+        const prev = dataByDate[selectedDate]?.insight || '';
+        const current = insightInput.value;
+      
+        if (prev !== current) {
+          if (!dataByDate[selectedDate]) dataByDate[selectedDate] = {};
+          dataByDate[selectedDate].insight = current;
+          localStorage.setItem('dataByDate', JSON.stringify(dataByDate));
+          showToast('깨달음 저장 완료!');
+        }
+      });
+      
+      reviewInput.addEventListener('change', () => {
+        if (!selectedDate) return;
+      
+        const prev = dataByDate[selectedDate]?.review || '';
+        const current = reviewInput.value;
+      
+        if (prev !== current) {
+          if (!dataByDate[selectedDate]) dataByDate[selectedDate] = {};
+          dataByDate[selectedDate].review = current;
+          localStorage.setItem('dataByDate', JSON.stringify(dataByDate));
+          showToast('느낀점 저장 완료!');
+        }
+      });
+      
+    
   function makeCalendar(year, month) {
     calendarEl.innerHTML = '';
     document.getElementById('current-month').textContent = `${year}년 ${month + 1}월`;
@@ -84,22 +110,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         cell.classList.add('selected');
+        selectedDate = dateStr;
 
-        const data = dataByDate[dateStr];
-        if (data) {
-          currentHomeworkUrl = data.homeworkUrl;
+        const data = dataByDate[selectedDate] || {};
+        document.getElementById('insight-input').value = data.insight || '';
+        document.getElementById('review-input').value = data.review || '';
+
+        if (data.homeworkUrl) {
           homeworkBtn.disabled = false;
-          insightBox.textContent = data.insight;
-          reviewBox.textContent = data.review;
-          insightInput.value = data.insight || '';
-          reviewInput.value = data.review || '';
         } else {
-          currentHomeworkUrl = null;
           homeworkBtn.disabled = true;
-          insightBox.textContent = '내용 없음';
-          reviewBox.textContent = '내용 없음';
-          insightInput.value = '';
-          reviewInput.value = '';
         }
       });
 
@@ -122,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
+    // 자동 오늘 선택
     if (year === todayYear && month === todayMonth) {
       requestAnimationFrame(() => {
         const todayCell = Array.from(document.querySelectorAll('.calendar-day'))
@@ -155,8 +176,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 모달 열기
   homeworkBtn.addEventListener('click', () => {
-    if (!currentHomeworkUrl) return;
-    iframe.src = currentHomeworkUrl;
+    if (!selectedDate || !dataByDate[selectedDate]?.homeworkUrl) return;
+    iframe.src = dataByDate[selectedDate].homeworkUrl;
     modal.classList.remove('hidden');
   });
 
@@ -164,19 +185,17 @@ document.addEventListener('DOMContentLoaded', function () {
   closeBtn.addEventListener('click', () => {
     modal.classList.add('hidden');
   });
-});
-insightInput.addEventListener('input', () => {
-  if (!dataByDate[selectedDate]) dataByDate[selectedDate] = {};
-  dataByDate[selectedDate].insight = insightInput.value;
-});
 
-reviewInput.addEventListener('input', () => {
-  if (!dataByDate[selectedDate]) dataByDate[selectedDate] = {};
-  dataByDate[selectedDate].review = reviewInput.value;
 });
-// // 로컬로 저장
-// localStorage.setItem('dataByDate', JSON.stringify(dataByDate));
-
-// // 불러오기
-// const saved = localStorage.getItem('dataByDate');
-// if (saved) dataByDate = JSON.parse(saved);
+// 토스트 함수 추가 및 호출
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.remove('hidden');
+    toast.classList.add('show');
+  
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.add('hidden');
+    }, 1500); // 1.5초 후 사라짐
+  }

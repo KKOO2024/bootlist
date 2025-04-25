@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GSITM 부트캠프 - 구서영</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+  <script src="test.js" defer></script>
 </head>
 <body>
   <header>
@@ -29,8 +29,15 @@
         <div class="list">
           <button id="homework-btn">homework</button>
         </div>
-        <div class="list" id="insight">깨달음</div>
-        <div class="list" id="review">간단 느낀점</div>
+        <div class="list" id="insight">
+          <label>깨달음</label>
+          <textarea id="insight-input" rows="4"></textarea>
+        </div>
+        <div class="list" id="review">
+          <label>간단 느낀점</label>
+          <textarea id="review-input" rows="4"></textarea>
+        </div>
+        
 
         <!-- ✅ homework 모달 팝업 -->
         <div id="homework-modal" class="modal hidden">
@@ -40,5 +47,6 @@
       </div>
     </div>
   </main>
+  <div id="toast" class="toast hidden">저장 완료!</div>
 </body>
 </html>
