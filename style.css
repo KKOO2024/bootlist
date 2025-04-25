@@ -1,0 +1,210 @@
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .box {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  /* 메인 박스 */
+  #contentbox {
+    display: flex;
+    flex-direction: row;
+    height: 320px;
+    max-height: 400px;
+  }
+  
+  /* 달력 박스 */
+  #calbox {
+    width: 40%;
+    background-color: aliceblue;
+    border-radius: 8px;
+    margin-right: 1em;
+  }
+  
+  /* 리스트 박스 */
+  #listbox {
+    width: 60%;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5em 1em;
+  }
+  
+  .list {
+    background-color: aqua;
+    height: 30%;
+    border-radius: 8px;
+    width: 100%;
+    text-align: left;
+  }
+  
+  /* 캘린더 전체 영역 */
+  #calendar-box {
+    height: 320px; /* 월 + 요일 + 날짜 합친 전체 높이 */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 월 헤더 (◀ 2024년 4월 ▶) */
+  #calendar-header {
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5em 1em;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  #calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #007bff;
+  }
+  
+  #calendar-header button:hover {
+    color: #0056b3;
+  }
+  
+  /* 캘린더 (요일 + 날짜) */
+  #calendar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    gap: 4px;
+  }
+  
+  /* 요일 행 + 날짜 행 */
+  .calendar-row {
+    display: flex;
+    flex: 1;
+  }
+  
+  /* 요일/날짜 칸 공통 */
+  .calendar-cell {
+    flex: 1;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  /* 요일 헤더 칸 */
+  .calendar-header {
+    font-weight: bold;
+    background-color: #eee;
+  }
+  
+  /* 빈 칸 */
+  .calendar-cell:empty {
+    height: 36px;
+    background-color: #f9f9f9;
+    cursor: default;
+  }
+  
+/* 날짜 셀 */
+.calendar-day {
+    position: relative;
+    z-index: 1;
+    height: 36px;        /* 칸 높이 전체 차지 */
+    line-height: 34px;   /* 셀 height와 같게 설정 (숫자가 세로 가운데 오게) */
+  }
+  
+  
+  /* 날짜 hover 시 텍스트 강조 */
+  .calendar-day:hover {
+    font-weight: bold;
+    color: #4b4b4b;
+  }
+  
+  /* 날짜 hover 시 동그란 배경 */
+  .calendar-day::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    background-color: #ffe8d8;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -1;
+  }
+  
+  .calendar-day:hover::before {
+    opacity: 1;
+  }
+  
+  /* 선택된 날짜 강조 */
+  .calendar-day.selected::before {
+    opacity: 1;
+    background-color: #ffc296;
+  }
+  
+  /* 💡 모바일 대응 (600px 이하) */
+  @media screen and (max-width: 600px) {
+    header {
+      font-size: 1.2rem;
+      padding: 15px;
+    }
+  
+    main {
+      padding: 10px;
+    }
+  
+    .box {
+      font-size: 1rem;
+      padding: 15px;
+    }
+  }
+/* 오늘 날짜 스타일 */
+.calendar-day.today::before {
+    opacity: 1;
+    background-color: #ffe8d8; /* 연한 민트색 (오늘 표시) */
+  }
+  
+  /* 오늘 날짜 텍스트 강조 */
+  .calendar-day.today {
+    color: #000000;
+  }
+  
+  /* 오늘이면서 선택된 날짜 스타일 */
+  .calendar-day.today.selected::before {
+    background-color: #ffc297; /* 더 진한 초록 */
+  }
+  
+  
