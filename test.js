@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (!dataByDate[selectedDate]) dataByDate[selectedDate] = {};
           dataByDate[selectedDate].insight = current;
           localStorage.setItem('dataByDate', JSON.stringify(dataByDate));
-          showToast('깨달음 저장 완료!');
+          showToast('✅ 저장 완료!');
         }
       });
       
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (!dataByDate[selectedDate]) dataByDate[selectedDate] = {};
           dataByDate[selectedDate].review = current;
           localStorage.setItem('dataByDate', JSON.stringify(dataByDate));
-          showToast('느낀점 저장 완료!');
+          showToast('✅ 저장 완료!');
         }
       });
       

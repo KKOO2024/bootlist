@@ -254,6 +254,8 @@ body {
 /* 토스트 스타일 */
 .toast , .toast img{
   position: fixed;
+  height: 1em;
+  line-height: 1em;
   top: 30px;
   left: 50%;
   transform: translateX(-50%);
