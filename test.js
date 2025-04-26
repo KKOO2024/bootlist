@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeBtn = document.querySelector('.close-btn');
   const modal = document.getElementById('homework-modal');
   const iframe = document.getElementById('homework-frame');
+  const homeworkPa = document.getElementById('homework-pa'); // 숙제버튼 부모 div 추가로 가져와야 해
+
 
       //텍스트에리어 저장 이벤트에 연결
       insightInput.addEventListener('change', () => {
@@ -179,11 +181,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!selectedDate || !dataByDate[selectedDate]?.homeworkUrl) return;
     iframe.src = dataByDate[selectedDate].homeworkUrl;
     modal.classList.remove('hidden');
+    homeworkPa.style.display = 'none';  // 🔥 숙제버튼 숨기기
   });
 
   // 모달 닫기
   closeBtn.addEventListener('click', () => {
     modal.classList.add('hidden');
+    homeworkPa.style.display = 'block'; // 🔥 숙제버튼 다시 보이기
   });
 
 });

@@ -42,9 +42,10 @@ body {
   /* 달력 박스 */
   #calbox {
     width: 40%;
-    background-color: aliceblue;
+    background-color: #f8f8f8;
     border-radius: 8px;
     margin-right: 1em;
+    box-shadow: inset 0px 1px 8px 3px rgba(0,0,0,0.05);
   }
   
   /* 리스트 박스 */
@@ -72,7 +73,6 @@ body {
     height: 320px; /* 월 + 요일 + 날짜 합친 전체 높이 */
     display: flex;
     flex-direction: column;
-
   }
   
   /* 월 헤더 (◀ 2024년 4월 ▶) */
@@ -102,6 +102,7 @@ body {
   #calendar {
     flex: 1;
     display: flex;
+    padding: 4px;
     flex-direction: column;
     font-family: sans-serif;
     gap: 4px;
@@ -120,7 +121,6 @@ body {
     line-height: 36px;
     text-align: center;
     box-sizing: border-box;
-    border: 1px solid #ddd;
     background-color: #fff;
     cursor: pointer;
   }
@@ -298,7 +298,6 @@ textarea:focus {
 }
 label {
   display: block;
-  background-color: wheat;
   margin-bottom: 4px;
   font-weight: bold;
   color: #444;
@@ -307,12 +306,11 @@ label {
 /* 숙제버튼 플로팅 */
 #homework-pa {
   position: absolute;
-  top: 8px;
-  right: -77px;
+  top: 4px;
+  right: -78px;
   z-index: 200;
   width: 100px;
   height: 1.2rem;
-  background-color: orange;
   padding: 0;
   overflow: hidden;
   border-radius: 4px 0 0 4px;
@@ -337,7 +335,7 @@ label {
 /* 숙제버튼 */
 #homework-btn{
   border: none;
-  background-color: orange;
+  background-color: rgb(255, 215, 140);
   color: white;
   display: block;
   font-size: 0.6em;
@@ -346,10 +344,11 @@ label {
 #homework-pa {
   transition: transform 0.3s ease;
   transform-origin: right center; /* 오른쪽을 고정 */
+  display: block;
 }
 
 #homework-pa:hover {
-  transform: translateX(-30px); /* x축으로만 2배 확대 */
+  transform: translateX(-30px);
 }
 #homework-btn:hover{
   cursor: pointer;
