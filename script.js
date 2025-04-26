@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const iframe = document.getElementById('homework-frame');
   const insightInput = document.getElementById('insight-input');
   const reviewInput = document.getElementById('review-input');
+  const homeworkPa = document.getElementById('homework-pa');
 
   const dataByDate = {
     '2025-04-25': {
@@ -180,3 +181,12 @@ reviewInput.addEventListener('input', () => {
 // // 불러오기
 // const saved = localStorage.getItem('dataByDate');
 // if (saved) dataByDate = JSON.parse(saved);
+
+
+homeworkBtn.addEventListener('mouseenter', () => {
+  homeworkPa.style.width = '300px';
+});
+
+homeworkBtn.addEventListener('mouseleave', () => {
+  homeworkPa.style.width = '150px';
+});
